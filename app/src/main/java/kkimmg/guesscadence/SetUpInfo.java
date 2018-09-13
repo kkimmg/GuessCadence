@@ -6,6 +6,15 @@ import java.io.Serializable;
  * 電話の自転車への設置状況
  */
 public class SetUpInfo implements Serializable {
+    /** ハンドルバーの右側 */
+    public static final int SETUP_BAR_RIGHT = 0;
+    /** ハンドルバーの左側 */
+    public static final int SETUP_BAR_LEFT = 1;
+    /** ハンドルバーの中央 */
+    public static final int SETUP_BAR_CENTER = 2;
+    /** チューブトップ */
+    public static final int SETUP_TUBETOP = 3;
+
     /**
      * 画面向き
      */
