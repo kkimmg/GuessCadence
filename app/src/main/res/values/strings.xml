@@ -1,4 +1,26 @@
 <resources>
     <string name="app_name">Guess Cadence</string>
     <string name="action_settings">Settings</string>
+    <string-array name="unit_array">
+        <item>kg</item>
+        <item>lb</item>
+    </string-array>
+    <string-array name="location_array">
+        <item>Handle Bar Right</item>
+        <item>Handle Bar Center</item>
+        <item>Handle Bar Left</item>
+        <item>Tubu Top</item>
+    </string-array>
+    <string-array name="angle_array">
+        <item>Radian</item>
+        <item>Percent</item>
+        <item>Permil</item>
+        <item>Deglee</item>
+    </string-array>
+    <string-array name="orientation_array">
+        <item>Portrait</item>
+        <item>Landscape</item>
+    </string-array>
+    <string name="title_activity_setup_top">SetupTopActivity</string>
+
 </resources>

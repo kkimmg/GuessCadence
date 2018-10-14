@@ -19,7 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetUpBike"></activity>
+        <activity android:name=".SetUpBikeActivity" />
+        <activity
+            android:name=".SetUpTopActivity"
+            android:label="@string/title_activity_setup_top"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SetUpSideActivity"></activity>
     </application>
 
 </manifest>
