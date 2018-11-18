@@ -259,13 +259,13 @@ public class SetUpTopView extends View {
         RectF rect = new RectF();
         float zoom = (float) getBitmapZoom();
         switch (rotation) {
-            case Configuration.ORIENTATION_PORTRAIT:
+            case Configuration.ORIENTATION_LANDSCAPE:
                 rect.top = pcy - SetUpSideView.PHONE_HALF_LENGTH * zoom;
                 rect.bottom = pcy + SetUpSideView.PHONE_HALF_LENGTH * zoom;
                 rect.left = pcx - SetUpSideView.PHONE_HALF_WIDTH * zoom;
                 rect.right = pcx + SetUpSideView.PHONE_HALF_WIDTH * zoom;
                 break;
-            case Configuration.ORIENTATION_LANDSCAPE:
+            case Configuration.ORIENTATION_PORTRAIT:
                 rect.top = pcy - SetUpSideView.PHONE_HALF_WIDTH * zoom;
                 rect.bottom = pcy + SetUpSideView.PHONE_HALF_WIDTH * zoom;
                 rect.left = pcx - SetUpSideView.PHONE_HALF_LENGTH * zoom;

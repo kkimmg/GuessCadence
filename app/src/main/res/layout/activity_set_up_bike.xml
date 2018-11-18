@@ -6,168 +6,207 @@
     android:layout_height="match_parent"
     tools:context=".SetUpBikeActivity">
 
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TableRow
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvBikeName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Bike name" />
-
-            <EditText
-                android:id="@+id/edBikeName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Bike" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tvBikeWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Weight of bike" />
-
-            <EditText
-                android:id="@+id/edBikeWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:autoText="false"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:text="60.0"
-                android:textAlignment="textEnd" />
-
-            <Spinner
-                android:id="@+id/spWeightUnit"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/unit_array" />
+                android:layout_height="wrap_content">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/tvBikeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Bike name" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/edBikeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="Bike" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tvPitch"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Phone angle" />
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/edPitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:ems="10"
-                android:inputType="number|numberSigned|numberDecimal"
-                android:text="0.00000"
-                android:textAlignment="textEnd" />
+                <TextView
+                    android:id="@+id/tvBikeWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weight of bike" />
 
-            <Button
-                android:id="@+id/btGoPitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="By Screen" />
+                <EditText
+                    android:id="@+id/edBikeWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:autoText="false"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:text="60.0"
+                    android:textAlignment="textEnd" />
 
-        </TableRow>
+                <Spinner
+                    android:id="@+id/spWeightUnit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/unit_array" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tvPitch2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/spPitchUnit"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:entries="@array/angle_array" />
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/btResetPitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Reset" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tvPitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Phone angle" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/edPitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:ems="10"
+                    android:inputType="number|numberSigned|numberDecimal"
+                    android:text="0.00000"
+                    android:textAlignment="textEnd" />
 
-            <TextView
-                android:id="@+id/tvOrientation"
+                <Button
+                    android:id="@+id/btGoPitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="By Screen" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvPitch2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/spPitchUnit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:entries="@array/angle_array" />
+
+                <Button
+                    android:id="@+id/btResetPitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reset" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvOrientation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Phone orientation" />
+
+                <Spinner
+                    android:id="@+id/spOrientation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:entries="@array/orientation_array" />
+
+                <Button
+                    android:id="@+id/btGoOrientation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="By Screen" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvOrientation2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/spLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:entries="@array/location_array" />
+
+                <Button
+                    android:id="@+id/btResetOrientation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reset" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Switch
+                    android:id="@+id/swLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:text="Lock SetUp Info" />
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Phone orientation" />
+                android:layout_weight="8">
 
-            <Spinner
-                android:id="@+id/spOrientation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:entries="@array/orientation_array" />
+                <Button
+                    android:id="@+id/btSetUpOK"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="OK" />
 
-            <Button
-                android:id="@+id/btGoOrientation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="By Screen" />
+                <Button
+                    android:id="@+id/btSetUpCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="Cancel" />
+            </TableRow>
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:id="@+id/tvOrientation2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/spLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:entries="@array/location_array" />
-
-            <Button
-                android:id="@+id/btResetOrientation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Reset" />
-        </TableRow>
-
-    </TableLayout>
+        </TableLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

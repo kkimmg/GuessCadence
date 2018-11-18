@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kkimmg.guesscadence">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,22 @@
             android:name=".SetUpTopActivity"
             android:label="@string/title_activity_setup_top"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SetUpSideActivity"></activity>
+        <activity android:name=".SetUpSideActivity" />
+
+        <provider
+            android:name=".BikeInfoProvider"
+            android:authorities="kkimmg.GuessCadence.BikeSetUpProvider"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".StoreSensorDataService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

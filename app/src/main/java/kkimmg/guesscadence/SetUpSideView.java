@@ -433,10 +433,11 @@ public class SetUpSideView extends View {
         canvas.drawText("ラジアン：" + String.valueOf(radian), 450, 50, PAINT_CURRENT);
         canvas.drawText("角度：" + String.valueOf((radian) * 180 / Math.PI), 450, 100, PAINT_CURRENT);
         canvas.drawText("ラジアン：" + String.valueOf(currentAngle + Math.PI / 2), 50, 50, PAINT_CURRENT);
+        canvas.drawText("ラジアン：" + String.valueOf(Math.acos(gravity[2] / SensorCache.STANDARD_GRAVITY)), 50, 75, PAINT_CURRENT);
         canvas.drawText("角度：" + String.valueOf((currentAngle + Math.PI / 2) * 180 / Math.PI), 50, 100, PAINT_CURRENT);
         canvas.drawText(String.valueOf(gravity[0]), 50, 150, PAINT_CURRENT);
-        canvas.drawText(String.valueOf(gravity[1]), 50, 200, PAINT_CURRENT);
-        canvas.drawText(String.valueOf(gravity[2]), 50, 250, PAINT_CURRENT);
+        canvas.drawText(String.valueOf(gravity[1]) + ":" + String.valueOf((float)(Math.cos(currentAngle) * SensorCache.STANDARD_GRAVITY)), 50, 200, PAINT_CURRENT);
+        canvas.drawText(String.valueOf(gravity[2]) + ":" + String.valueOf((float)(Math.sin(currentAngle) * -SensorCache.STANDARD_GRAVITY)), 50, 250, PAINT_CURRENT);
         canvas.drawText("ラジアン：" + String.valueOf(getSetUpInfo().getPitchByRadian()), 450, 150, PAINT_CURRENT);
         canvas.drawText("角度：" + String.valueOf((getSetUpInfo().getPitchByRadian()) * 180 / Math.PI), 450, 200, PAINT_CURRENT);
     }

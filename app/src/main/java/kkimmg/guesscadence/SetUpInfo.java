@@ -15,17 +15,15 @@ public class SetUpInfo implements Serializable {
     /**
      * ハンドルバーの左側
      */
-    public static final int SETUP_BAR_LEFT = 1;
+    public static final int SETUP_BAR_LEFT = 2;
     /**
      * ハンドルバーの中央
      */
-    public static final int SETUP_BAR_CENTER = 2;
+    public static final int SETUP_BAR_CENTER = 1;
     /**
      * チューブトップ
      */
     public static final int SETUP_TUBETOP = 3;
-
-
     /**
      * 角度の単位（ラジアン）
      */
@@ -42,7 +40,10 @@ public class SetUpInfo implements Serializable {
      * 角度の単位（度）
      */
     public static final int UNIT_DEGLEE = 3;
-
+    /**
+     * ID
+     */
+    private long id;
     /**
      * 電話のセット位置
      */
@@ -68,11 +69,107 @@ public class SetUpInfo implements Serializable {
      */
     private boolean edited = false;
     /**
+     * ロックされた設定か？
+     */
+    private boolean locked = false;
+//    /**
+//     * 重力加速度
+//     */
+//    private float[] gravity;
+    /**
+     * 初期値
+     */
+    private SetUpInfo initialValue;
+
+        /**
+     * 重力加速度から端末の角度を計算する
+     * @return 端末の角度
+     */
+    public static double getPitchFromGravity (int orientation, float[] gravity) {
+        double ret = 0.0F;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // cosΘ = b /  c
+            ret = Math.acos(gravity[1] / SensorCache.STANDARD_GRAVITY);
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            ret = Math.acos(gravity[1] / SensorCache.STANDARD_GRAVITY);
+        }
+        return ret;
+    }
+
+
+    /**
+     * 端末の角度から重力加速度を計算する
+     *
+     * @param radian 端末の角度
+     * @param orientation 端末の縦横
+     * @return 重力加速度
+     */
+    public static float[] getGraviry(int orientation, double radian) {
+        float[] ret = new float[2];
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            ret[0] = 0.0F;
+            ret[1] = (float) (Math.cos(radian) * SensorCache.STANDARD_GRAVITY);// cosΘ = b /  c → b = cosΘ * c
+            ret[2] = (float) (Math.sin(radian) * -SensorCache.STANDARD_GRAVITY);
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            ret[0] = 0.0F;
+            ret[1] = (float) (Math.cos(radian) * SensorCache.STANDARD_GRAVITY);// cosΘ = b /  c → b = cosΘ * c
+            ret[2] = (float) (Math.sin(radian) * -SensorCache.STANDARD_GRAVITY);
+        }
+        return ret;
+    }
+
+    /**
+     * ID
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * ID
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
      * すでに編集済の設定か？
      */
     public boolean isLocked() {
         return locked;
     }
+//    /**
+//     * 重力加速度
+//     */
+//    public float[] getGravity() {
+//        if (gravity == null) {
+//            gravity = new float[2];
+//        }
+//        return gravity.clone();
+//    }
+//    /**
+//     * 重力加速度
+//     */
+//    public void setGravity(float[] gravity) {
+//        this.gravity = (gravity != null ? gravity.clone() : null);
+//    }
+//
+//    /**
+//     * 重力加速度から端末の角度を計算する
+//     * @return 端末の角度
+//     */
+//    public float getPitchFromGravity () {
+//        float ret = 0.0F;
+//        if (getOrientation() == Configuration.ORIENTATION_PORTRAIT) {
+//            // cosΘ = b /  c
+//            ret = gravity[1] / SensorCache.STANDARD_GRAVITY;
+//        } else if (getOrientation() == Configuration.ORIENTATION_LANDSCAPE) {
+//            ret = gravity[1] / SensorCache.STANDARD_GRAVITY;
+//        }
+//        return ret;
+//    }
+//
+
     /**
      * すでに編集済の設定か？
      */
@@ -81,10 +178,24 @@ public class SetUpInfo implements Serializable {
     }
 
     /**
-     * ロックされた設定か？
+     * 端末の角度から重力加速度を計算する
+     *
+     * @return 重力加速度
      */
-    private boolean locked = false;
-    /** 初期値 */
+    public float[] getGravityFromPitch() {
+        return getGraviry(orientation, getPitchByRadian());
+    }
+//
+//    /**
+//     * 端末の角度から加速度の成分を再設定する
+//     */
+//    public void resetGravityFromPitch () {
+//        this.setGravity(getGravityFromPitch());
+//    }
+
+    /**
+     * 初期値
+     */
     public SetUpInfo getInitialValue() {
         if (isLocked()) {
             return this;
@@ -93,15 +204,43 @@ public class SetUpInfo implements Serializable {
             initialValue = new SetUpInfo();
             initialValue.setLocked(true);
         }
+
         return initialValue;
     }
-    /** 初期値 */
+
+    /**
+     * 初期値
+     */
     public void setInitialValue(SetUpInfo initialValue) {
         this.initialValue = initialValue;
+        if (isLocked()) {
+            copyFrom(initialValue);
+        }
     }
 
-    /** 初期値 */
-    private SetUpInfo initialValue;
+    /**
+     * 値をコピーする
+     *
+     * @param src コピー元
+     * @param tag コピー先
+     */
+    public void copyFromTo(SetUpInfo src, SetUpInfo tag) {
+        tag.setRoll(src.getRoll());
+        tag.setOrientation(src.getOrientation());
+        tag.setPitch(src.getPitch());
+        tag.setPitchUnit(src.getPitchUnit());
+        tag.setSetUpLocation(src.getSetUpLocation());
+    }
+
+    /**
+     * 値をコピーする
+     *
+     * @param src コピー元
+     */
+    public void copyFrom(SetUpInfo src) {
+        copyFromTo(src, this);
+    }
+
     /**
      * 選択された角度単位
      *
@@ -223,31 +362,16 @@ public class SetUpInfo implements Serializable {
     /**
      * 垂直角をラジアンで取得する
      */
-    public float getPitchByRadian () {
-//        float ret = 0;
-//        switch (getPitchUnit()) {
-//            case UNIT_RADIAN:
-//                ret = getPitch();
-//                break;
-//            case UNIT_PERCENT:
-//                ret = (float)(Math.atan(getPitch() / 100D));
-//                break;
-//            case UNIT_PERMIL:
-//                ret = (float)(Math.atan(getPitch() / 1000D));
-//                break;
-//            case UNIT_DEGLEE:
-//                ret = (float)(getPitchUnit() * 180D / Math.PI);
-//                break;s
-//        }
-//        return ret;
+    public float getPitchByRadian() {
         return SensorCache.transrateToRadianFromUnit(getPitchUnit(), getPitch());
     }
 
     /**
      * 垂直核をラジアンでセットする
+     *
      * @param radian ラジアン値
      */
-    public void setPitchByRadian (float radian) {
+    public void setPitchByRadian(float radian) {
         float value = SensorCache.transrateToUnitFromRadian(getPitchUnit(), radian);
         setPitch(value);
     }

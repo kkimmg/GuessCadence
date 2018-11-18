@@ -16,6 +16,8 @@ import static android.hardware.Sensor.TYPE_MAGNETIC_FIELD;
  * センサーデータのキャッシュ
  */
 public class SensorCache implements SensorEventListener, Runnable {
+    /** 重力加速度 */
+    public static final float STANDARD_GRAVITY =  9.80665F;
     /**
      * ラジアンの180度
      */
@@ -185,7 +187,6 @@ public class SensorCache implements SensorEventListener, Runnable {
     public void cache() {
         cache(true);
     }
-
     /**
      * キャッシュする
      */

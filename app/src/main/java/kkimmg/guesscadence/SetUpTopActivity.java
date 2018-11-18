@@ -25,13 +25,6 @@ public class SetUpTopActivity extends AppCompatActivity {
         SetUpTopView setUpTopView = (SetUpTopView)findViewById(R.id.vwSetUpTopView2);
         setUpTopView.setSetUpInfo(setUpInfo);
 
-        Button btResetPitch2 = (Button)findViewById(R.id.btResetPitch2);
-        btResetPitch2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     @Override

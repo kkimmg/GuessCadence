@@ -7,9 +7,33 @@ import java.io.Serializable;
  */
 public class BikeInfo implements Serializable {
     /**
+     * 重量の単位を変更する
+     * @param srcUnit 変換前単位
+     * @param tagUnit 変換後単位
+     * @param src 変換前重量
+     * @return 変換後重量
+     */
+    public static double transrateWeight(int srcUnit, int tagUnit, double src) {
+        double ret = src;
+        if (srcUnit == WEIGHT_LB && tagUnit == WEIGHT_KG) {
+            ret = src * 5760.0D / 1000.0D;
+        } else if (srcUnit == WEIGHT_LB && tagUnit == WEIGHT_KG) {
+            ret = src * 1000.0D / 5760.0D;
+        }
+        return ret;
+    }
+    /**
+     * 重量単位(KG)
+     */
+    public static final int WEIGHT_KG = 1;
+    /**
+     * 重量単位(LB)
+     */
+    public static final int WEIGHT_LB = 2;
+    /**
      * ID
      */
-    private int id = 0;
+    private long id = 0;
     /**
      * 名前
      */
@@ -19,21 +43,39 @@ public class BikeInfo implements Serializable {
      */
     private double weight = 10.0D;
     /**
+     * 重量単位
+     */
+    private int weightUnit = WEIGHT_KG;
+    /**
      * 設置状況
      */
-    private SetUpInfo setUpInfo;
+    private SetUpInfo setUpInfo = new SetUpInfo();
+
+    /**
+     * 重量単位
+     */
+    public int getWeightUnit() {
+        return weightUnit;
+    }
+
+    /**
+     * 重量単位
+     */
+    public void setWeightUnit(int weightUnit) {
+        this.weightUnit = weightUnit;
+    }
 
     /**
      * ID
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
     /**
      * ID
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -50,6 +92,26 @@ public class BikeInfo implements Serializable {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
+    /**
+     * これは自転車のマスターデータですか
+     * @return マスターか履歴か
+     */
+    public boolean isMasterData() {
+        return masterData;
+    }
+    /**
+     * これは自転車のマスターデータですか
+     * @param masterData マスターか履歴か
+     */
+    public void setMasterData(boolean masterData) {
+        this.masterData = masterData;
+    }
+
+    /**
+     * これは自転車のマスターデータですか
+     */
+    private boolean masterData = true;
 
     /**
      * 名前
