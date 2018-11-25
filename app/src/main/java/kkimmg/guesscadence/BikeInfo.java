@@ -1,5 +1,9 @@
 package kkimmg.guesscadence;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
 import java.io.Serializable;
 
 /**
@@ -100,6 +104,7 @@ public class BikeInfo implements Serializable {
     public boolean isMasterData() {
         return masterData;
     }
+
     /**
      * これは自転車のマスターデータですか
      * @param masterData マスターか履歴か
@@ -118,7 +123,7 @@ public class BikeInfo implements Serializable {
      */
     public String getName() {
         if (name == null) {
-            setName("Bike");
+            setName("New Bike");
         }
         return name;
     }

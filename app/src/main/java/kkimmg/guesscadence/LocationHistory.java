@@ -7,7 +7,31 @@ import java.io.Serializable;
 /**
  * ロケーションの履歴データ
  */
-public class LocationHistory implements Serializable {
+public class LocationHistory implements Serializable, RideHistory {
+    /**
+     * 高度
+     */
+    public static final int VALUE_ALTITUDE = 0;
+    /**
+     * 緯度
+     */
+    public static final int VALUE_LATITUDE = 1;
+    /**
+     * 経度
+     */
+    public static final int VALUE_LONGITUDE = 2;
+    /**
+     * スピード検出可能？
+     */
+    public static final int VALUE_HASSPEED = 3;
+    /**
+     * スピード
+     */
+    public static final int VALUE_SPEED = 4;
+    /**
+     * ID
+     */
+    private long id = 0;
     /**
      * セッションID
      */
@@ -15,7 +39,7 @@ public class LocationHistory implements Serializable {
     /**
      * タイムスタンプ
      */
-    private long time;
+    private long timestamp;
     /**
      * 高度
      */
@@ -39,13 +63,28 @@ public class LocationHistory implements Serializable {
 
     /**
      * コンストラクタ
+     */
+    public LocationHistory() {
+        super();
+        sessionId = SensorEventHistory.NO_SESSION_ID;
+    }
+    /**
+     * コンストラクタ
      *
      * @param sessionId セッションID
      * @param location  ロケーション
      */
     public LocationHistory(long sessionId, Location location) {
         this.sessionId = sessionId;
-        this.time = location.getTime();
+        readFromLoaction(location);
+    }
+
+    /**
+     * ロケーションから情報を取得する
+     * @param location ロケーション
+     */
+    public void readFromLoaction(Location location) {
+        this.timestamp = location.getTime();
         this.altitude = location.getAltitude();
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
@@ -53,6 +92,70 @@ public class LocationHistory implements Serializable {
         if (this.hasSpeed) {
             this.speed = location.getSpeed();
         }
+    }
+
+    /**
+     * ID
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * ID
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * 履歴タイプ
+     *
+     * @return 履歴タイプ
+     */
+    @Override
+    public int getHistoryType() {
+        return RideHistory.HISTORY_LOCATION;
+    }
+
+    /**
+     * センサータイプ
+     * センサータイプはないので任意の値、とりあえず-1
+     *
+     * @return センサータイプ
+     */
+    @Override
+    public int getSensorType() {
+        return -1;
+    }
+
+    /**
+     * センサー値
+     *
+     * @param index 値の配列位置
+     * @return センサー値の配列
+     */
+    @Override
+    public double getValue(int index) {
+        double ret = 0.0F;
+        switch (index) {
+            case VALUE_ALTITUDE:
+                ret = getAltitude();
+                break;
+            case VALUE_LATITUDE:
+                ret = getLatitude();
+                break;
+            case VALUE_LONGITUDE:
+                ret = getLongitude();
+                break;
+            case VALUE_HASSPEED:
+                ret = (hasSpeed() ? 1 : 0);
+                break;
+            case VALUE_SPEED:
+                ret = getSpeed();
+                break;
+        }
+        return ret;
     }
 
     /**
@@ -72,15 +175,15 @@ public class LocationHistory implements Serializable {
     /**
      * タイムスタンプ
      */
-    public long getTime() {
-        return time;
+    public long getTimestamp() {
+        return timestamp;
     }
 
     /**
      * タイムスタンプ
      */
-    public void setTime(long time) {
-        this.time = time;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     /**

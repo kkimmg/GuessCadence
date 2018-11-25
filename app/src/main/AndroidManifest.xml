@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kkimmg.guesscadence">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -40,7 +41,22 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+
+        <provider
+            android:name=".SessionProvider"
+            android:authorities="kkimmg.GuessCadence.SessionProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".HistoryProvider"
+            android:authorities="k_kim_mg.guesscadence.historyprovider"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".BikeListActivity"
+            android:label="@string/title_activity_bike_list"></activity>
     </application>
 
 </manifest>

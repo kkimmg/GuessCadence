@@ -68,6 +68,18 @@ public class SetUpInfo implements Serializable {
      * すでに編集済の設定か？
      */
     private boolean edited = false;
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        SetUpInfo ret = (SetUpInfo) super.clone();
+
+
+        copyFromTo(this, ret);
+
+
+        return ret;
+    }
+
     /**
      * ロックされた設定か？
      */
