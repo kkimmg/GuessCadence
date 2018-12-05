@@ -15,11 +15,13 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
         <activity android:name=".SetUpBikeActivity" />
         <activity
@@ -27,12 +29,6 @@
             android:label="@string/title_activity_setup_top"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SetUpSideActivity" />
-
-        <provider
-            android:name=".BikeInfoProvider"
-            android:authorities="kkimmg.GuessCadence.BikeSetUpProvider"
-            android:enabled="true"
-            android:exported="true" />
 
         <service
             android:name=".StoreSensorDataService"
@@ -45,18 +41,31 @@
 
         <provider
             android:name=".SessionProvider"
-            android:authorities="kkimmg.GuessCadence.SessionProvider"
+            android:authorities="kkimmg.guesscadence.SessionProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".BikeInfoProvider"
+            android:authorities="kkimmg.guesscadence.BikeInfoProvider"
             android:enabled="true"
             android:exported="true" />
         <provider
             android:name=".HistoryProvider"
-            android:authorities="k_kim_mg.guesscadence.historyprovider"
+            android:authorities="kkimmg.guesscadence.HistoryProvider"
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".BikeListActivity" />
         <activity
-            android:name=".BikeListActivity"
-            android:label="@string/title_activity_bike_list"></activity>
+            android:name=".NavigationDrawerActivity"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

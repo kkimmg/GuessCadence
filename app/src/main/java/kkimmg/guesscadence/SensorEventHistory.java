@@ -88,7 +88,7 @@ public class SensorEventHistory implements Serializable, RideHistory {
             return 0;
         } else if (index < 0) {
             return 0;
-        } else if (values.length < index) {
+        } else if (values.length <= index) {
             return 0;
         }
         return values[index];

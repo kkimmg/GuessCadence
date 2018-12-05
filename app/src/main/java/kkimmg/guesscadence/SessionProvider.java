@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.Iterator;
 
@@ -17,7 +18,7 @@ public class SessionProvider extends ContentProvider {
     /**
      * プロバイダ名
      */
-    public static final String PROVIDER_NAME = "k_kim_mg.guesscadence.SessionProvider";
+    public static final String PROVIDER_NAME = "kkimmg.guesscadence.SessionProvider";
     /**
      * テーブル名（セッション）
      */
@@ -368,7 +369,7 @@ public class SessionProvider extends ContentProvider {
             try {
                 sqLiteDatabase.execSQL(SQL_CREATE_TABLE_SESSION);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                Log.e("CREATE DB(SESSION)", ex.getLocalizedMessage(), ex);
             }
         }
 

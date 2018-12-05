@@ -18,7 +18,7 @@ public class HistoryProvider extends ContentProvider {
     /**
      * プロバイダ名
      */
-    public static final String PROVIDER_NAME = "k_kim_mg.guesscadence.HistoryProvider";
+    public static final String PROVIDER_NAME = "kkimmg.guesscadence.HistoryProvider";
     /**
      * テーブル名（履歴）
      */

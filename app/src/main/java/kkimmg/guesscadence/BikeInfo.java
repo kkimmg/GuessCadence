@@ -10,6 +10,10 @@ import java.io.Serializable;
  * バイクの情報
  */
 public class BikeInfo implements Serializable {
+    /** デフォルトの自転車IDを取得するためのキー */
+    public static final String DEFAULT_BIKEINFO_KEY = "DEFAULT_BIKEINFO_KEY";
+    /** デフォルトの自転車ID */
+    public static final long DEFAULT_BIKEINFO_ID = 0;
     /**
      * 重量の単位を変更する
      * @param srcUnit 変換前単位

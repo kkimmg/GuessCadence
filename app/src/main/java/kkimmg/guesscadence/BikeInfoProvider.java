@@ -4,12 +4,14 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class BikeInfoProvider extends ContentProvider {
     /**
      * プロバイダ名
      */
-    public static final String PROVIDER_NAME = "k_kim_mg.guesscadence.BikeInfoProvider";
+    public static final String PROVIDER_NAME = "kkimmg.guesscadence.BikeInfoProvider";
     /**
      * テーブル名（自転車）
      */
@@ -126,7 +128,7 @@ public class BikeInfoProvider extends ContentProvider {
      */
     private SQLiteDatabase db;
 
-    /**
+   /**
      * バイク情報の追加
      */
     public static BikeInfo insertBikeInfo(Context context, BikeInfo bikeInfo) {
@@ -249,6 +251,19 @@ public class BikeInfoProvider extends ContentProvider {
     }
 
     /**
+     * デフォルトのバイク情報
+     */
+    public static BikeInfo getDefaultBikeInfo(Context context) {
+        BikeInfo ret = new BikeInfo();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Long id = prefs.getLong(BikeInfo.DEFAULT_BIKEINFO_KEY, BikeInfo.DEFAULT_BIKEINFO_ID);
+        ret.setId(id);
+        ret = getBikeInfo(context, ret);
+
+        return ret;
+    }
+
+    /**
      * バイク情報の取得
      */
     public static BikeInfo getBikeInfo(Context context, BikeInfo bikeInfo) {
@@ -293,8 +308,8 @@ public class BikeInfoProvider extends ContentProvider {
                 info = getBikeInfo(context, info);
                 ret.add(info);
             }
+            cursor1.close();
         }
-        cursor1.close();
         return ret;
     }
 
@@ -474,7 +489,7 @@ public class BikeInfoProvider extends ContentProvider {
                         "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "name TEXT," +
                         "weight REAL," +
-                        "weigthunit INTEGER," +
+                        "weightunit INTEGER," +
                         "masterdata INTEGER," +
                         "sessionid INTEGER" +
                         ");";
