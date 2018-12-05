@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -272,6 +273,18 @@ public class StoreSensorDataService extends Service implements SensorEventListen
 
         rideSession.setEnd(System.currentTimeMillis());
         RideSession ret = SessionProvider.updateSession(this, rideSession);
+
+        //
+        try {
+            CSVExporter exp = new CSVExporter(this, ret);
+            Thread th = new Thread(exp);
+            th.start();
+        } catch (Exception ex) {
+            Log.e("OUTPUT", ex.getMessage(), ex);
+        }
+        //
+
+
         rideSession = null;
         return ret;
     }

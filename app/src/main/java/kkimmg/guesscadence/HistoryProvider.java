@@ -151,9 +151,9 @@ public class HistoryProvider extends ContentProvider {
         }
     }
 
-    public static Iterator<RideHistory> getHistoryIterator (Context context) {
+    public static Iterator<RideHistory> getHistoryIterator (Context context, RideSession session) {
         closeSessionIterator();
-        ite_cursor = context.getContentResolver().query(Uri.parse(SessionProvider.CONTENT_BASE_SESSION), null, null, null, null, null);
+        ite_cursor = context.getContentResolver().query(SessionProvider.CONTENT_SESSION, null, null, new String[]{String.valueOf(session.getId())}, null, null);
         HistoryProvider.HistoryIterator ite = new HistoryProvider.HistoryIterator(context, ite_cursor);
         return ite;
     }

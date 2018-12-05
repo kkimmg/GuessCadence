@@ -24,6 +24,14 @@ public class CSVExporter implements Runnable {
     private RideSession rideSession;
 
     /**
+     * コンストラクタ
+     */
+    public CSVExporter (Context context, RideSession rideSession) {
+        this.context = context;
+        this.rideSession = rideSession;
+    }
+
+    /**
      * セッション
      */
     public RideSession getRideSession() {
@@ -63,7 +71,13 @@ public class CSVExporter implements Runnable {
                 cursor1 = context.getContentResolver().query(Uri.parse(BikeInfoProvider.CONTENT_BASE_SETUPINFO), null, null, new String[]{String.valueOf(rideSession.getInitialBikeInfo().getId())}, null);
                 writeCursorData(writer, BikeInfoProvider.TABLE_SETUPINFO, cursor1);
 
+                cursor1 = context.getContentResolver().query(Uri.parse(BikeInfoProvider.CONTENT_BASE_BIKEINFOID + "#" + rideSession.getBikeInfo().getId()), null, null, null, null);
+                writeCursorData(writer, BikeInfoProvider.TABLE_BIKEINFO, cursor1);
+                cursor1 = context.getContentResolver().query(Uri.parse(BikeInfoProvider.CONTENT_BASE_SETUPINFO), null, null, new String[]{String.valueOf(rideSession.getBikeInfo().getId())}, null);
+                writeCursorData(writer, BikeInfoProvider.TABLE_SETUPINFO, cursor1);
 
+                cursor1 = context.getContentResolver().query(SessionProvider.CONTENT_SESSION, null, null, new String[]{String.valueOf(rideSession.getId())}, null, null);;
+                writeCursorData(writer, HistoryProvider.TABLE_HISTORY, cursor1);
 
             } catch (IOException e) {
                 e.printStackTrace();
