@@ -141,7 +141,7 @@ public class StoreSensorDataService extends Service implements SensorEventListen
      */
     private void initializeSensors () {
         // センサー設定
-        int sensorDelay = getPrefInt(SENSOR_DELAY_KEY, SensorManager.SENSOR_DELAY_FASTEST);
+        int sensorDelay = getPrefInt(SENSOR_DELAY_KEY, SensorManager/*.SENSOR_DELAY_GAME*/.SENSOR_DELAY_FASTEST);
         // センサーマネージャ
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         // すべて
@@ -197,12 +197,19 @@ public class StoreSensorDataService extends Service implements SensorEventListen
         super.onCreate();
     }
 
+    long cnt = 1;
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         long id = (rideSession != null ? rideSession.getId() : RideSession.OUT_OF_SESSION_ID);
         SensorEventHistory sensorEventHistory = new SensorEventHistory(id, sensorEvent);
         if (logging) {
             HistoryProvider.insertRideHistory(this, sensorEventHistory);
+            cnt ++;
+            if (cnt > 10000) {
+                endSession();
+                cnt = 0;
+            }
         }
     }
 
@@ -270,6 +277,10 @@ public class StoreSensorDataService extends Service implements SensorEventListen
      */
     public RideSession endSession () {
         logging = false;
+
+        if (rideSession == null) {
+            return null;
+        }
 
         rideSession.setEnd(System.currentTimeMillis());
         RideSession ret = SessionProvider.updateSession(this, rideSession);

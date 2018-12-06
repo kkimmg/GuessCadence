@@ -9,11 +9,23 @@ import java.io.Serializable;
 /**
  * バイクの情報
  */
-public class BikeInfo implements Serializable {
+public class BikeInfo implements Serializable,Cloneable {
     /** デフォルトの自転車IDを取得するためのキー */
     public static final String DEFAULT_BIKEINFO_KEY = "DEFAULT_BIKEINFO_KEY";
     /** デフォルトの自転車ID */
     public static final long DEFAULT_BIKEINFO_ID = 0;
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        BikeInfo clone = new BikeInfo();
+        clone.setName(getName());
+        clone.setWeight(getWeight());
+        clone.setWeightUnit(getWeightUnit());
+        clone.setMasterData(isMasterData());
+        clone.setSetUpInfo((SetUpInfo) getSetUpInfo().clone());
+        return clone;
+    }
+
     /**
      * 重量の単位を変更する
      * @param srcUnit 変換前単位

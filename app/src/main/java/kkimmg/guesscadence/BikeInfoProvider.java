@@ -521,6 +521,7 @@ public class BikeInfoProvider extends ContentProvider {
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             try {
+                //sqLiteDatabase.execSQL("drop table BikeInfo");
                 sqLiteDatabase.execSQL(SQL_CREATE_TABLE_BIKE);
                 sqLiteDatabase.execSQL(SQL_CREATE_TABLE_SETUP);
             } catch (Exception ex) {

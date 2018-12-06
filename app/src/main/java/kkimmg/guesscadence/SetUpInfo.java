@@ -71,7 +71,7 @@ public class SetUpInfo implements Serializable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        SetUpInfo ret = (SetUpInfo) super.clone();
+        SetUpInfo ret = new SetUpInfo();
 
 
         copyFromTo(this, ret);

@@ -1,9 +1,11 @@
 package kkimmg.guesscadence;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -76,9 +78,17 @@ public class CSVExporter implements Runnable {
                 cursor1 = context.getContentResolver().query(Uri.parse(BikeInfoProvider.CONTENT_BASE_SETUPINFO), null, null, new String[]{String.valueOf(rideSession.getBikeInfo().getId())}, null);
                 writeCursorData(writer, BikeInfoProvider.TABLE_SETUPINFO, cursor1);
 
-                cursor1 = context.getContentResolver().query(SessionProvider.CONTENT_SESSION, null, null, new String[]{String.valueOf(rideSession.getId())}, null, null);;
+                cursor1 = context.getContentResolver().query(HistoryProvider.CONTENT_HISTORY, null, null, new String[]{String.valueOf(rideSession.getId())}, null, null);;
                 writeCursorData(writer, HistoryProvider.TABLE_HISTORY, cursor1);
 
+                writer.flush();
+                writer.close();
+
+
+                Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+                Uri contentUri = Uri.fromFile(outfile);
+                mediaScanIntent.setData(contentUri);
+                context.sendBroadcast(mediaScanIntent);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -95,12 +105,19 @@ public class CSVExporter implements Runnable {
     private void writeCursorData(BufferedWriter writer, String tableName, Cursor cursor) {
         if (cursor == null) return;
 
-        StringBuffer buff = new StringBuffer();
+        StringBuffer buff;// = new StringBuffer();
         while (cursor.moveToNext()) {
+            buff = new StringBuffer();
             appendColumn(buff, tableName);
             for (int i = 0; i < cursor.getColumnCount(); i++) {
                 String val = cursor.getString(i);
                 appendColumn(buff, val);
+            }
+            try {
+                writer.write(buff.toString());
+                writer.newLine();
+            } catch (IOException ioex) {
+                Log.e("OUTPUT", ioex.getMessage(), ioex);
             }
         }
         cursor.close();
@@ -118,8 +135,8 @@ public class CSVExporter implements Runnable {
                 buff.append("\"");
             }
             buff.append(ch);
-            buff.append("\",");
         }
+        buff.append("\",");
     }
 
     /**  コンテキスト */

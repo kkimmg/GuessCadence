@@ -96,8 +96,13 @@ public class SessionProvider extends ContentProvider {
      * @return 挿入したセッション
      */
     public static RideSession insertSession(Context context, RideSession rideSession) {
-        BikeInfo initialBikeInfo = rideSession.getBikeInfo();
-        BikeInfo bikeInfo = BikeInfoProvider.insertBikeInfo(context, initialBikeInfo);
+        BikeInfo initialBikeInfo = rideSession.getInitialBikeInfo();
+        BikeInfo bikeInfo = null;
+        try {
+            bikeInfo = BikeInfoProvider.insertBikeInfo(context, (BikeInfo) initialBikeInfo.clone());
+        } catch (CloneNotSupportedException e) {
+            Log.e("SESSION", e.getMessage(), e);
+        }
 
         ContentValues cv = new ContentValues();
         cv.put("startstamp", rideSession.getStart());

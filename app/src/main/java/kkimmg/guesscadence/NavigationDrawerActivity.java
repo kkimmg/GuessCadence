@@ -1,16 +1,19 @@
 package kkimmg.guesscadence;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -52,8 +55,18 @@ public class NavigationDrawerActivity extends AppCompatActivity
             mBound = false;
         }
     };
-    /** セッション */
+    /**
+     * セッション
+     */
     private RideSession rideSession = null;
+    /**
+     * 現在のバイク情報
+     */
+    private BikeInfo currentBikeInfo = null;
+    /**
+     * 現在のセッション
+     */
+    private RideSession currentRideSession = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,12 +126,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
         }
     }
 
-    /** 現在のバイク情報 */
-    private BikeInfo currentBikeInfo = null;
-
-    /** 現在のセッション */
-    private RideSession currentRideSession = null;
-
     /**
      * OnCreateのオリジナル部分
      */
@@ -130,12 +137,25 @@ public class NavigationDrawerActivity extends AppCompatActivity
         btnStartSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // パーミッションチェック
+                if (ContextCompat.checkSelfPermission(NavigationDrawerActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    // パーミッションを求めるダイアログを表示する
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            1);
+
+                }
                 if (mService != null && mBound) {
                     rideSession = new RideSession();
                     rideSession.setInitialBikeInfo(currentBikeInfo);
-                    rideSession.setBikeInfo(currentBikeInfo);
+                    try {
+                        rideSession.setBikeInfo((BikeInfo) currentBikeInfo.clone());
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
                     rideSession = mService.startSession(rideSession);
-                    currentBikeInfo = rideSession.getBikeInfo();
+                    //currentBikeInfo = rideSession.getBikeInfo();
                 }
             }
         });
@@ -160,7 +180,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         } else {
             currentBikeInfo = BikeInfoProvider.getDefaultBikeInfo(this);
         }
-}
+    }
 
     @Override
     public void onBackPressed() {
